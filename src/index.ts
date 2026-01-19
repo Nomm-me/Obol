@@ -48,13 +48,8 @@ async function registerCommands() {
   const rest = new REST({ version: '10' }).setToken(CONFIG.token);
   const payload = commands.map((cmd) => cmd.data.toJSON());
 
-  if (CONFIG.devGuildId) {
-    await rest.put(Routes.applicationGuildCommands(appId, CONFIG.devGuildId), { body: payload });
-    console.log('✓ Registered guild commands (dev)');
-  } else {
-    await rest.put(Routes.applicationCommands(appId), { body: payload });
-    console.log('✓ Registered global commands');
-  }
+  await rest.put(Routes.applicationCommands(appId), { body: payload });
+  console.log('✓ Registered global commands');
 }
 
 client.once(Events.ClientReady, async () => {
